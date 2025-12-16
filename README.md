@@ -33,6 +33,14 @@ $$B(t) = (1-t)^3P_0 + 3(1-t)^2tP_1 + 3(1-t)t^2P_2 + t^3P_3$$
 | **$P_2$** | Control point 2 | Dynamic (Spring-Damped) |
 | **$P_3$** | End point | Fixed Endpoint |
 
+### 🧩 Behind the Math — How It Works Visually
+
+To compute a point $B(t)$ on the curve, we blend control points step by step using **linear interpolation (LERP)**.
+
+1.  **Iterative LERP:** We find three intermediate points by LERPing between the control points ($P_0 \to P_1$, $P_1 \to P_2$, $P_2 \to P_3$).
+2.  **Repetitive LERP:** We repeat the LERP process on those three intermediate points to get two new points.
+3.  **Final Point:** A final LERP between the last two points yields the exact position $B(t)$ on the curve. Every frame, we compute hundreds of these tiny points (for $t=0 \to 1$) to draw the smooth curve.
+
 ### 2️⃣ Tangent Vector (Derivative): $B'(t)$
 
 The derivative $B'(t)$ calculates the vector representing the instantaneous direction of the curve at parameter $t$. The resulting vector is normalized for consistent length before being visualized as a tangent line.
@@ -98,5 +106,6 @@ Through this project, I learned:
 ---
 
 ##  Conclusion
+
 
 This project blends mathematics, programming, and physics to create a visually smooth and technically accurate interactive animation. It demonstrates problem-solving skills, creativity, and a solid grasp of geometry and simulation concepts — making it an excellent addition to my portfolio.
