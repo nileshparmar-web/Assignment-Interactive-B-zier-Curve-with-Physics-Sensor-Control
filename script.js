@@ -88,3 +88,48 @@ function updatePhysics() {
     p.y += p.vy;
   });
 }
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const gradient = ctx.createLinearGradient(P0.x, P0.y, P3.x, P3.y);
+  gradient.addColorStop(0, '#60a5fa');
+  gradient.addColorStop(1, '#c084fc');
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 4;
+
+  ctx.beginPath();
+  for (let t = 0; t <= 1; t += 0.01) {
+    const p = getBezierPoint(P0, P1, P2, P3, t);
+    if (t === 0) ctx.moveTo(p.x, p.y);
+    else ctx.lineTo(p.x, p.y);
+  }
+  ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+  [0.25, 0.5, 0.75].forEach((t) => {
+    const p = getBezierPoint(P0, P1, P2, P3, t);
+    const tan = normalize(getBezierTangent(P0, P1, P2, P3, t));
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+    ctx.lineTo(p.x + tan.x * 30, p.y + tan.y * 30);
+    ctx.stroke();
+  });
+
+  [P0, P1, P2, P3].forEach((p, i) => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = i === 0 || i === 3 ? '#22c55e' : '#facc15';
+    ctx.shadowColor = ctx.fillStyle;
+    ctx.shadowBlur = 8;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  });
+}
+
+function animate() {
+  updatePhysics();
+  draw();
+  requestAnimationFrame(animate);
+}
+animate();
