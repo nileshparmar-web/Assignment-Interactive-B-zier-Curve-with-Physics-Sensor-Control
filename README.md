@@ -33,31 +33,35 @@ $$B(t) = (1-t)^3P_0 + 3(1-t)^2tP_1 + 3(1-t)t^2P_2 + t^3P_3$$
 | **$P_2$** | Control point 2 | Dynamic (Spring-Damped) |
 | **$P_3$** | End point | Fixed Endpoint |
 
-### 🧩 Behind the Math — How It Works Visually
+### Behind the Math — How It Works Visually
 
 To help you visualize the geometry and math behind the Bézier curve:
 
-🎯 **1. Control Points and Path**
+**1. Control Points and Path**
 
-P0 ●------● P1
-
-● P2------● P3
+P0 ●-------●P1
+             \            
+              \
+               ●P2-------●P3
 
 The curve always starts at $P_0$ and ends at $P_3$.
 $P_1$ and $P_2$ act like magnets pulling the rope toward them.
 The closer $t$ is to a control point, the more influence that point has.
 
-🧭 **2. Linear Interpolation (Step by Step)** 
+ **2. Linear Interpolation (Step by Step)** 
 To compute a point on the Bézier curve, we blend control points step by step using linear interpolation (LERP).
 
 1️⃣ **First, draw lines between control points:**
-P0 ●────● P1 A P1 ●────● P2 B P2 ●────● P3 C
+P0 ●────● P1   P1 ●────● P2    P2 ●────● P3 
+     A              B               C
 
 2️⃣ **Then interpolate again between A, B, and C:**
-A ●────● B ●────● C D E
+A ●────● B ●────● C  
+    D         E
 
 3️⃣ **Finally, interpolate between D and E — the result is the point B(t) on the curve:**
-D ●────● E F (B(t))
+D ●────● E 
+     F (B(t))
 
 Every frame, we compute hundreds of these tiny points (for $t = 0 \to 1$) and connect them to draw the smooth curve.
 
@@ -140,4 +144,5 @@ Through this project, I learned:
 
 
 This project blends mathematics, programming, and physics to create a visually smooth and technically accurate interactive animation. It demonstrates problem-solving skills, creativity, and a solid grasp of geometry and simulation concepts — making it an excellent addition to my portfolio.
+
 
