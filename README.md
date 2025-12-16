@@ -35,11 +35,42 @@ $$B(t) = (1-t)^3P_0 + 3(1-t)^2tP_1 + 3(1-t)t^2P_2 + t^3P_3$$
 
 ### 🧩 Behind the Math — How It Works Visually
 
-To compute a point $B(t)$ on the curve, we blend control points step by step using **linear interpolation (LERP)**.
+To help you visualize the geometry and math behind the Bézier curve:
 
-1.  **Iterative LERP:** We find three intermediate points by LERPing between the control points ($P_0 \to P_1$, $P_1 \to P_2$, $P_2 \to P_3$).
-2.  **Repetitive LERP:** We repeat the LERP process on those three intermediate points to get two new points.
-3.  **Final Point:** A final LERP between the last two points yields the exact position $B(t)$ on the curve. Every frame, we compute hundreds of these tiny points (for $t=0 \to 1$) to draw the smooth curve.
+🎯 **1. Control Points and Path**
+
+P0 ●------● P1
+
+● P2------● P3
+
+The curve always starts at $P_0$ and ends at $P_3$.
+$P_1$ and $P_2$ act like magnets pulling the rope toward them.
+The closer $t$ is to a control point, the more influence that point has.
+
+🧭 **2. Linear Interpolation (Step by Step)** 
+To compute a point on the Bézier curve, we blend control points step by step using linear interpolation (LERP).
+
+1️⃣ **First, draw lines between control points:**
+P0 ●────● P1 A P1 ●────● P2 B P2 ●────● P3 C
+
+2️⃣ **Then interpolate again between A, B, and C:**
+A ●────● B ●────● C D E
+
+3️⃣ **Finally, interpolate between D and E — the result is the point B(t) on the curve:**
+D ●────● E F (B(t))
+
+Every frame, we compute hundreds of these tiny points (for $t = 0 \to 1$) and connect them to draw the smooth curve.
+
+### 🧮 3. Tangent Vector (Derivative)
+
+The tangent vector represents the direction of motion along the curve:
+
+$$B'(t)=3(1−t)^2(P_1−P_0) + 6(1−t)t(P_2−P_1) + 3t^2(P_3−P_2)$$
+
+In simple words:
+
+* It’s like drawing a tiny arrow along the curve’s surface.
+* Short tangent lines are drawn at $t=0.25, 0.5, 0.75$ to visualize slope changes.
 
 ### 2️⃣ Tangent Vector (Derivative): $B'(t)$
 
@@ -109,3 +140,4 @@ Through this project, I learned:
 
 
 This project blends mathematics, programming, and physics to create a visually smooth and technically accurate interactive animation. It demonstrates problem-solving skills, creativity, and a solid grasp of geometry and simulation concepts — making it an excellent addition to my portfolio.
+
