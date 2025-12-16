@@ -72,3 +72,19 @@ function normalize(v) {
   const len = Math.hypot(v.x, v.y) || 1;
   return { x: v.x / len, y: v.y / len };
 }
+
+const k = 0.08; 
+const damping = 0.85; 
+
+function updatePhysics() {
+  [P1, P2].forEach((p) => {
+    const ax = -k * (p.x - p.target.x) - damping * p.vx;
+    const ay = -k * (p.y - p.target.y) - damping * p.vy;
+
+    p.vx += ax;
+    p.vy += ay;
+
+    p.x += p.vx;
+    p.y += p.vy;
+  });
+}
