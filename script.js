@@ -29,3 +29,21 @@ let P2 = {
 };
 
 let dragPoint = null;
+
+canvas.addEventListener('mousedown', (e) => {
+  const mx = e.clientX;
+  const my = e.clientY;
+
+  if (Math.hypot(mx - P1.x, my - P1.y) < 10) dragPoint = P1;
+  else if (Math.hypot(mx - P2.x, my - P2.y) < 10) dragPoint = P2;
+});
+
+canvas.addEventListener('mouseup', () => (dragPoint = null));
+
+canvas.addEventListener('mousemove', (e) => {
+  if (dragPoint) {
+    dragPoint.target.x = e.clientX;
+    dragPoint.target.y = e.clientY;
+  }
+});
+
